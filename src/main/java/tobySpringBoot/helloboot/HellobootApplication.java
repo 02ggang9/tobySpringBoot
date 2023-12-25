@@ -26,23 +26,28 @@ public class HellobootApplication {
 
     public static void main(String[] args) {
 //		SpringApplication.run(HellobootApplication.class, args);
-        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
+        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
+            @Override
+            protected void onRefresh() {
+                super.onRefresh();
+
+                ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+                WebServer webServer = serverFactory.getWebServer(servletContext -> {
+                    servletContext.addServlet("dispatcherServlet", new DispatcherServlet(this)).addMapping("/*");
+                });
+                webServer.start();
+            }
+        };
 
         // 메타 데이터를 넣어줌
         applicationContext.registerBean(HelloController.class);
         applicationContext.registerBean(SimpleHelloService.class);
         applicationContext.refresh();
 
-
         /*
          * 임베디드 톰켓을 띄워봄
          * */
 
-        ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-        WebServer webServer = serverFactory.getWebServer(servletContext -> {
-            servletContext.addServlet("dispatcherServlet", new DispatcherServlet(applicationContext)).addMapping("/*");
-        });
-        webServer.start();
     }
 
 }
