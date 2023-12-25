@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -37,7 +38,7 @@ public class HellobootApplication {
          * 임베디드 톰켓을 띄워봄
          * */
 
-        TomcatServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+        ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
             servletContext.addServlet("dispatcherServlet", new DispatcherServlet(applicationContext)).addMapping("/*");
         });

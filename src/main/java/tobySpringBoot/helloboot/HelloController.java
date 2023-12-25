@@ -1,14 +1,16 @@
 package tobySpringBoot.helloboot;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
-/*
- * HTML을 통채로 리턴하는 대신에 응답을 특정한 타입으로 인코딩해서 보내는 방식
- * */
-//@RestController
+
+@Controller
+@RequestMapping("/hello")
 public class HelloController {
 
     private final HelloService helloService;
@@ -17,10 +19,13 @@ public class HelloController {
         this.helloService = helloService;
     }
 
-    //    @GetMapping("/hello")
+    @GetMapping
+    @ResponseBody
     public String hello(String name) {
+        // ResponseBody를 붙이지 않거나 RestController를 붙이지 않는다면 반환 값이 String일 때 view를 찾으려고 함.
+        // 하지만 View를 만들지 않았으니 404 에러를 발생시킨다.
 
-        return helloService.sayHello(Objects.requireNonNull(name));
+        return helloService.sayHello(name);
     }
 
 }
