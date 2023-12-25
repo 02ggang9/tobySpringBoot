@@ -27,6 +27,7 @@ public class HellobootApplication {
 
         // 메타 데이터를 넣어줌
         applicationContext.registerBean(HelloController.class);
+        applicationContext.registerBean(SimpleHelloService.class);
         applicationContext.refresh();
 
 
