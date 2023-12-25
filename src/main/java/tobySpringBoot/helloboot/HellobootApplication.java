@@ -12,20 +12,9 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import static tobySpringBoot.helloboot.MySpringApplication.run;
 
-@Configuration
-@ComponentScan
+@MySpringBootAnnotation
 public class HellobootApplication {
 
-    // 코드 날리면 동작 안됨.
-    @Bean
-    public ServletWebServerFactory servletWebServerFactory() {
-        return new TomcatServletWebServerFactory();
-    }
-
-    @Bean
-    public DispatcherServlet dispatcherServlet() {
-        return new DispatcherServlet();
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(HellobootApplication.class, args);
