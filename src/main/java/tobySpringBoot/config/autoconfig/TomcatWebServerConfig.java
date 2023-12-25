@@ -8,4 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TomcatWebServerConfig {
 
+    @Bean
+    public ServletWebServerFactory servletWebServerFactory() {
+        return new TomcatServletWebServerFactory();
+    }
+
 }
