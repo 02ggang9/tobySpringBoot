@@ -1,14 +1,15 @@
 package tobySpringBoot.helloboot;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.Objects;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/hello")
 public class HelloController {
 
     private final HelloService helloService;
@@ -17,11 +18,10 @@ public class HelloController {
         this.helloService = helloService;
     }
 
-    @GetMapping
-    public String hello(@RequestParam(value = "name") String name) {
-        if (name == null || name.trim().length() == 0) throw new IllegalArgumentException();
-
-        return helloService.sayHello(name);
+    @GetMapping("/hello")
+    public String hello(@RequestParam(name = "name") String name) {
+        SimpleHelloService helloService = new SimpleHelloService();
+        return helloService.sayHello(Objects.requireNonNull(name));
     }
 
 }
